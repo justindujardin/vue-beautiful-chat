@@ -5,20 +5,19 @@ module.exports = {
   productionSourceMap: isProd,
 
   chainWebpack: (config) => {
-    // Inline images & svgs into build
-    config.module
-      .rule('images')
-      .use('url-loader')
-      .options({
-        limit: 4096 * 3
-      })
-    config.module
-      .rule('svg')
-      .use('file-loader')
-      .loader('url-loader')
-      .options({
-        limit: 4096 * 3
-      })
+    config.module.rule('images').set('type', 'asset/inline')
+    config.module.rule('images').set('generator', {
+      dataUrl: (content) => {
+        return 'data:image/png;base64,' + content.toString('base64')
+      }
+    })
+    config.module.rule('svg').set('type', 'asset/inline')
+    config.module.rule('svg').set('generator', {
+      dataUrl: (content) => {
+        return 'data:image/svg+xml;base64,' + content.toString('base64')
+      }
+    })
+    return config
   },
 
   css: {
