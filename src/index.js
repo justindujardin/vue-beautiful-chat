@@ -31,5 +31,5 @@ const Plugin = {
     Vue.use(VTooltip)
   }
 }
-
+export {default as Launcher} from './Launcher.vue'
 export default Plugin
